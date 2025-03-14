@@ -1,9 +1,11 @@
-datapath=/data4/MVTec_ad
-datasets=('screw' 'pill' 'capsule' 'carpet' 'grid' 'tile' 'wood' 'zipper' 'cable' 'toothbrush' 'transistor' 'metal_nut' 'bottle' 'hazelnut' 'leather')
+datapath="./datasets/mvtec"
+# datasets=('screw' 'pill' 'capsule' 'carpet' 'grid' 'tile' 'wood' 'zipper' 'cable' 'toothbrush' 'transistor' 'metal_nut' 'bottle' 'hazelnut' 'leather')
+datasets=('wood')
+
 dataset_flags=($(for dataset in "${datasets[@]}"; do echo '-d '"${dataset}"; done))
 
-python3 main.py \
---gpu 4 \
+python main.py \
+--gpu 0 \
 --seed 0 \
 --log_group simplenet_mvtec \
 --log_project MVTecAD_Results \
@@ -25,6 +27,6 @@ net \
 --dsc_margin .5 \
 --pre_proj 1 \
 dataset \
---batch_size 8 \
---resize 329 \
---imagesize 288 "${dataset_flags[@]}" mvtec $datapath
+--batch_size 1 \
+--resize 256 \
+--imagesize 256 "${dataset_flags[@]}" mvtec $datapath

@@ -22,6 +22,8 @@ import common
 import metrics
 from utils import plot_segmentation_images
 
+import cv2
+
 LOGGER = logging.getLogger(__name__)
 
 def init_weight(m):
@@ -342,16 +344,32 @@ class SimpleNet(torch.nn.Module):
         return auroc, full_pixel_auroc
     
     def _evaluate(self, test_data, scores, segmentations, features, labels_gt, masks_gt):
-        
         scores = np.squeeze(np.array(scores))
         img_min_scores = scores.min(axis=-1)
         img_max_scores = scores.max(axis=-1)
         scores = (scores - img_min_scores) / (img_max_scores - img_min_scores)
-        # scores = np.mean(scores, axis=0)
 
         auroc = metrics.compute_imagewise_retrieval_metrics(
             scores, labels_gt 
         )["auroc"]
+
+        # 1️⃣ **Boş (None) maskeleri sıfır matrisine çevir**
+        masks_gt = [np.zeros((256, 256), dtype=np.uint8) if mask is None else mask for mask in masks_gt]
+
+        # 2️⃣ **Maskelerin tipini ve boyutunu kontrol et**
+        masks_gt = [np.array(mask, dtype=np.uint8) for mask in masks_gt]
+
+        # 3️⃣ **Tüm maskeleri 256x256 olarak yeniden boyutlandır**
+        masks_gt = [cv2.resize(mask, (256, 256), interpolation=cv2.INTER_NEAREST) for mask in masks_gt]
+
+        # 4️⃣ **Boyutları kontrol et**
+        print("Mask Shapes After Processing:", [mask.shape for mask in masks_gt])
+
+        # 5️⃣ **Maskeleri NumPy dizisine çevir**
+        masks_gt = np.stack(masks_gt)
+
+        # ✅ `compute_pro()` için gerekli iki argüman eklendi
+        pro = metrics.compute_pro(np.squeeze(masks_gt), np.squeeze(segmentations))
 
         if len(masks_gt) > 0:
             segmentations = np.array(segmentations)
@@ -370,20 +388,19 @@ class SimpleNet(torch.nn.Module):
                 norm_segmentations += (segmentations - min_score) / max(max_score - min_score, 1e-2)
             norm_segmentations = norm_segmentations / len(scores)
 
-
             # Compute PRO score & PW Auroc for all images
             pixel_scores = metrics.compute_pixelwise_retrieval_metrics(
-                norm_segmentations, masks_gt)
-                # segmentations, masks_gt
+                norm_segmentations, masks_gt
+            )
             full_pixel_auroc = pixel_scores["auroc"]
 
-            pro = metrics.compute_pro(np.squeeze(np.array(masks_gt)), 
-                                            norm_segmentations)
+            pro = metrics.compute_pro(np.squeeze(np.array(masks_gt)), norm_segmentations)
         else:
             full_pixel_auroc = -1 
             pro = -1
 
         return auroc, full_pixel_auroc, pro
+
         
     
     def train(self, training_data, test_data):
