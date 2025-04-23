@@ -1,0 +1,157 @@
+/* Genel Sayfa Ortalaması */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .container {
+    margin: 90px auto 40px auto;  /* Navbar yüksekliğine göre boşluk */
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1000px;
+  }
+  
+  /* Bölümler */
+  .image-section, .result-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .control-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  /* Görsel Kutuları */
+  .image-box {
+    width: 220px;
+    height: 220px;
+    border: 2px dashed #7b8794;
+    border-radius: 10px;
+    background-color: #f8fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #7b8794;
+    font-weight: 500;
+    transition: border-color 0.3s;
+  }
+  
+  .image-box:hover {
+    border-color: #3b82f6;
+  }
+  
+  .image-box img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+  }
+  
+  /* Metrics Kutusu */
+  .metrics-box {
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #f1f5f9;
+    padding: 15px;
+    width: 220px;
+    text-align: center;
+    color: #334155;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Butonlar */
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3b82f6;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  button:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+  }
+  
+  /* Selectbox */
+  select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  
+  select:hover {
+    border-color: #3b82f6;
+  }
+  
+  .upload-button {
+    padding: 10px 20px;
+    width: 150px;
+    text-align: center;
+    background-color: #3b82f6;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .upload-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+  }
+  
+  
+  /* Responsive Design */
+  @media (min-width: 1025px) {
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 40px;
+      align-items: start;
+      padding: 60px;
+      max-width: 1200px;
+      margin: 90px auto;
+    }
+  
+    .image-section,
+    .result-section {
+      align-items: center;
+      gap: 15px;
+    }
+  
+    .control-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 15px;
+    }
+  
+    .metrics-box {
+      margin-top: 20px;
+    }
+  }
+  
