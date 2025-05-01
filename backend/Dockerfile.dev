@@ -1,5 +1,3 @@
-# backend/Dockerfile.dev
-
 FROM python:3.11-slim
 
 # Sistem gereksinimleri
@@ -13,7 +11,12 @@ COPY backend/api /app/api
 COPY backend/requirements.txt /app/requirements.txt
 
 # Paketleri kur
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install numpy && \
+    pip install torch==2.2.2+cu121 torchvision==0.17.2+cu121 \
+    -f https://download.pytorch.org/whl/torch_stable.html && \
+    python -c "import torch; import torchvision; print('Torch OK, CUDA:', torch.cuda.is_available())"
 
 # Uygulamayı başlat
 CMD ["uvicorn", "api.app.main:app", "--host", "0.0.0.0", "--port", "8020", "--reload"]
