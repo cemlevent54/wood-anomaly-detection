@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  fastapi-dev:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.dev
+    ports:
+      - "8020:8020"
+    volumes:
+      - ./backend/api:/app/api
+      - ./backend/requirements.txt:/app/requirements.txt
+    environment:
+      - PYTHONBUFFERED=1
+    restart: always
