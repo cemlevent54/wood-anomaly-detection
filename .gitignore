@@ -2,5 +2,5 @@ backend/api/app/modelfiles
 backend/venv
 tests
 backend/api/app/images
-
-
+*.pyc
+__pycache__/
