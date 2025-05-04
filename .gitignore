@@ -4,4 +4,4 @@ tests
 backend/api/app/images
 *.pyc
 __pycache__/
-
+*.log
