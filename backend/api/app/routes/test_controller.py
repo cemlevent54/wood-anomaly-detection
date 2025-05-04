@@ -1,5 +1,7 @@
+
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from api.app.services.efficientad.efficientad_service import EfficientAdService
+from api.app.services.uninet.uninet_service import UninetService
 from api.app.services.revisiting_reverse_dissilation.revisiting_reverse_dissilation_service import RevisitingReverseDissilationService
 # from api.app.services.stpm.stpm_service import STPMService
 # from api.app.services.pbas.pbas_service import PBASService
@@ -15,6 +17,8 @@ class MODEL_NAME(str, Enum):
     # STPM = "stpm"
     # PBAS = "pbas"
     REVISITING_REVERSE_DISSILATION = "revisiting_reverse_dissilation"
+    UNINET = "uninet"
+    
 
 
 model_services = {
@@ -22,6 +26,7 @@ model_services = {
     # MODEL_NAME.STPM: STPMService(),
     # MODEL_NAME.PBAS: PBASService(),
     MODEL_NAME.REVISITING_REVERSE_DISSILATION: RevisitingReverseDissilationService(),
+    MODEL_NAME.UNINET: UninetService(),
 }
 
 
