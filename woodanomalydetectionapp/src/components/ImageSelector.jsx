@@ -5,7 +5,7 @@ const ImageSelector = ({ options, onSelect }) => {
     <select onChange={onSelect}>
       <option value="">Select Model</option>
       {options.map((opt, i) => (
-        <option key={i} value={opt}>{opt}</option>
+        <option key={i} value={opt.value}>{opt.label}</option>
       ))}
     </select>
   );
