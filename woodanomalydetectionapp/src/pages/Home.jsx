@@ -4,22 +4,64 @@ import ImageSelector from "../components/ImageSelector";
 import ResultDisplay from "../components/ResultDisplay";
 import MetricsDisplay from "../components/MetricsDisplay";
 import ExportButton from "../components/ExportButton";
-import "../css/Home.css";  // Eğer özel stil gerekiyorsa
+import "../css/Home.css";
 
 const Home = () => {
+  const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [resultImage, setResultImage] = useState(null);
+  const [selectedModel, setSelectedModel] = useState("");
+  const [resultImage, setResultImage] = useState(null); // This will hold the decoded overlay
   const [metrics, setMetrics] = useState(null);
 
   const handleUpload = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setUploadedImage(URL.createObjectURL(e.target.files[0]));
+    const file = e.target.files[0];
+    if (file) {
+      setUploadedFile(file);
+      setUploadedImage(URL.createObjectURL(file));
     }
   };
 
-  const handleGetResults = () => {
-    setResultImage("/sample_result.png");
-    setMetrics({ F1: 0.87, IOU: 0.75, AUC: 0.91, anomaly: true });
+  const handleModelSelect = (e) => {
+    setSelectedModel(e.target.value);
+  };
+
+  const handleGetResults = async () => {
+    if (!uploadedFile || !selectedModel) {
+      alert("Please select a model and upload an image.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", uploadedFile);
+    formData.append("model_name", selectedModel);
+
+    try {
+      const response = await fetch("http://localhost:8020/test/test_model", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Model request failed.");
+      }
+
+      const result = await response.json();
+
+      // Only use overlay_base64 to display the result image
+      const overlayDataUrl = `${result.overlay_base64}`;
+      setResultImage(overlayDataUrl);
+
+      // Set metrics manually from response fields
+      setMetrics({
+        F1: result.f1_score,
+        IOU: result.iou_score,
+        score: result.score,
+        anomaly: result.prediction === "anomaly",
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while testing the model.");
+    }
   };
 
   const handleExport = () => {
@@ -41,8 +83,12 @@ const Home = () => {
 
       <div className="control-section">
         <ImageSelector
-          options={["Model 1", "Model 2"]}
-          onSelect={(e) => console.log("Selected:", e.target.value)}
+          options={[
+            { label: "Efficient AD", value: "efficient_ad" },
+            { label: "Revisiting Reverse Dissilation", value: "revisiting_reverse_dissilation" },
+            { label: "Uninet", value: "uninet" },
+          ]}
+          onSelect={handleModelSelect}
         />
         <button onClick={handleGetResults}>GET RESULTS</button>
         <ExportButton onClick={handleExport} />
