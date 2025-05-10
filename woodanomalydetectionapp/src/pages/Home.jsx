@@ -87,6 +87,7 @@ const Home = () => {
             { label: "Efficient AD", value: "efficient_ad" },
             { label: "Revisiting Reverse Dissilation", value: "revisiting_reverse_dissilation" },
             { label: "Uninet", value: "uninet" },
+            { label: "STPM", value: "stpm" },
           ]}
           onSelect={handleModelSelect}
         />
