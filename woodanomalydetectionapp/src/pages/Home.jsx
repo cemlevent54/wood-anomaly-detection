@@ -12,6 +12,8 @@ const Home = () => {
   const [selectedModel, setSelectedModel] = useState("");
   const [resultImage, setResultImage] = useState(null); // This will hold the decoded overlay
   const [metrics, setMetrics] = useState(null);
+  const [showModal, setShowModal] = useState(false); // Yüklenen resim için modal
+  const [showResultModal, setShowResultModal] = useState(false); // Sonuç resmi için modal
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -27,7 +29,7 @@ const Home = () => {
 
   const handleGetResults = async () => {
     if (!uploadedFile || !selectedModel) {
-      alert("Please select a model and upload an image.");
+      alert("Lütfen bir model seçiniz ve bir resim yükleyiniz.");
       return;
     }
 
@@ -60,12 +62,12 @@ const Home = () => {
       });
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while testing the model.");
+      alert("Model testi sırasında bir hata oluştu.");
     }
   };
 
   const handleExport = () => {
-    alert("Results exported!");
+    alert("Sonuçlar dışa aktarıldı!");
   };
 
   return (
@@ -75,10 +77,15 @@ const Home = () => {
           {uploadedImage ? (
             <img src={uploadedImage} alt="Uploaded" />
           ) : (
-            "UPLOADED IMAGE"
+            "YÜKLENEN RESİM"
           )}
         </div>
         <ImageUploader onUpload={handleUpload} />
+        {uploadedImage && (
+          <button style={{ marginTop: "10px" }} onClick={() => setShowModal(true)}>
+            Büyüt
+          </button>
+        )}
       </div>
 
       <div className="control-section">
@@ -97,8 +104,94 @@ const Home = () => {
 
       <div className="result-section">
         <ResultDisplay resultImage={resultImage} />
-        <MetricsDisplay metrics={metrics} />
+        {resultImage && (
+          <button style={{ marginTop: "10px" }} onClick={() => setShowResultModal(true)}>
+            Büyüt
+          </button>
+        )}
+        {/*<MetricsDisplay metrics={metrics} />*/}
       </div>
+
+      {/* Modal: Yüklenen resim */}
+      {showModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.6)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1000
+        }}
+          onClick={() => setShowModal(false)}
+        >
+          <div style={{
+            background: "#fff",
+            padding: 20,
+            borderRadius: 10,
+            boxShadow: "0 4px 32px rgba(0,0,0,0.2)",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+            onClick={e => e.stopPropagation()}
+          >
+            <img src={uploadedImage} alt="Büyük Görsel" style={{
+              maxWidth: "80vw",
+              maxHeight: "80vh",
+              borderRadius: 8
+            }} />
+            <button style={{ marginTop: 16 }} onClick={() => setShowModal(false)}>
+              Kapat
+            </button>
+          </div>
+        </div>
+      )}
+      {/* Modal: Sonuç resmi */}
+      {showResultModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.6)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 1000
+        }}
+          onClick={() => setShowResultModal(false)}
+        >
+          <div style={{
+            background: "#fff",
+            padding: 20,
+            borderRadius: 10,
+            boxShadow: "0 4px 32px rgba(0,0,0,0.2)",
+            maxWidth: "90vw",
+            maxHeight: "90vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+            onClick={e => e.stopPropagation()}
+          >
+            <img src={resultImage} alt="Büyük Sonuç Görseli" style={{
+              maxWidth: "80vw",
+              maxHeight: "80vh",
+              borderRadius: 8
+            }} />
+            <button style={{ marginTop: 16 }} onClick={() => setShowResultModal(false)}>
+              Kapat
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

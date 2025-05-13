@@ -37,8 +37,12 @@ body {
   
   /* Görsel Kutuları */
   .image-box {
-    width: 220px;
-    height: 220px;
+    min-width: 220px;
+    min-height: 220px;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 80vh;
     border: 2px dashed #7b8794;
     border-radius: 10px;
     background-color: #f8fafc;
@@ -48,6 +52,7 @@ body {
     color: #7b8794;
     font-weight: 500;
     transition: border-color 0.3s;
+    padding: 10px;
   }
   
   .image-box:hover {
@@ -57,6 +62,9 @@ body {
   .image-box img {
     max-width: 100%;
     max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: 8px;
   }
   

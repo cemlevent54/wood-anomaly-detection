@@ -18,9 +18,9 @@ const Navbar = () => {
         </div>
 
         <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/howto">How to use?</Link>
+          <Link to="/">Anasayfa</Link>
+          <Link to="/about">Hakkında</Link>
+          <Link to="/howto">Nasıl kullanılır?</Link>
         </div>
       </div>
     </nav>

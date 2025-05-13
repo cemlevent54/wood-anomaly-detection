@@ -59,7 +59,7 @@ class STPMService(ModelInterface):
         self.log_message("UYARI: test_model_with_photo() kullanılmıyor, lütfen test_image() fonksiyonunu kullanın.", level="WARNING")
         return self.test_image(image_input, threshold=threshold)
 
-    def test_image(self, image_input, threshold=0.75):
+    def test_image(self, image_input, threshold=0.6):
         # Resmi oku ve modele uygun hale getir
         if isinstance(image_input, bytes):
             image = Image.open(io.BytesIO(image_input)).convert('RGB')

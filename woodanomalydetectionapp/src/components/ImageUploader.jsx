@@ -10,7 +10,7 @@ const ImageUploader = ({ onUpload }) => {
         onChange={onUpload} 
       />
       <label htmlFor="fileUpload" className="upload-button">
-        Select Image
+       Resim Seç
       </label>
     </div>
   );
