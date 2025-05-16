@@ -29,7 +29,7 @@ const Home = () => {
 
   const handleGetResults = async () => {
     if (!uploadedFile || !selectedModel) {
-      alert("Lütfen bir model seçiniz ve bir resim yükleyiniz.");
+      alert("Please select a model and upload an image.");
       return;
     }
 
@@ -44,7 +44,7 @@ const Home = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Model request failed.");
+        throw new Error("Model test failed.");
       }
 
       const result = await response.json();
@@ -62,7 +62,7 @@ const Home = () => {
       });
     } catch (error) {
       console.error("Error:", error);
-      alert("Model testi sırasında bir hata oluştu.");
+      alert("Model test failed.");
     }
   };
 
@@ -77,13 +77,13 @@ const Home = () => {
           {uploadedImage ? (
             <img src={uploadedImage} alt="Uploaded" />
           ) : (
-            "YÜKLENEN RESİM"
+            "UPLOADED IMAGE"
           )}
         </div>
         <ImageUploader onUpload={handleUpload} />
         {uploadedImage && (
           <button style={{ marginTop: "10px" }} onClick={() => setShowModal(true)}>
-            Büyüt
+            Enlarge
           </button>
         )}
       </div>
@@ -106,7 +106,7 @@ const Home = () => {
         <ResultDisplay resultImage={resultImage} />
         {resultImage && (
           <button style={{ marginTop: "10px" }} onClick={() => setShowResultModal(true)}>
-            Büyüt
+            Enlarge
           </button>
         )}
         {/*<MetricsDisplay metrics={metrics} />*/}
@@ -141,7 +141,7 @@ const Home = () => {
           }}
             onClick={e => e.stopPropagation()}
           >
-            <img src={uploadedImage} alt="Büyük Görsel" style={{
+            <img src={uploadedImage} alt="Large Image" style={{
               maxWidth: "80vw",
               maxHeight: "80vh",
               borderRadius: 8
@@ -181,13 +181,13 @@ const Home = () => {
           }}
             onClick={e => e.stopPropagation()}
           >
-            <img src={resultImage} alt="Büyük Sonuç Görseli" style={{
+            <img src={resultImage} alt="Large Result Image" style={{
               maxWidth: "80vw",
               maxHeight: "80vh",
               borderRadius: 8
             }} />
             <button style={{ marginTop: 16 }} onClick={() => setShowResultModal(false)}>
-              Kapat
+              Close
             </button>
           </div>
         </div>
