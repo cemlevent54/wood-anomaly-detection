@@ -201,12 +201,12 @@ class EfficientAdService(ModelInterface):
 
             return {
                 "model": "efficient_ad",
-                "prediction": prediction,
-                "score": round(score, 4),
                 "anomaly_map_base64": anomaly_map_base64,
                 "overlay_base64": overlay_base64,
-                "f1_score": round(f1, 4) if f1 is not None else None,
-                "iou_score": round(iou, 4) if iou is not None else None
+                "results": {
+                    "aupro_score": 0.7278311708540561,
+                    "image_level_classification_auroc": 0.9167002012072434
+                }
             }
 
         except Exception as e:
