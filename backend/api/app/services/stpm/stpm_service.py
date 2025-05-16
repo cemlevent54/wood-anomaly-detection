@@ -118,10 +118,12 @@ class STPMService(ModelInterface):
         # Return both heatmap and contoured image in a JSON-like format
         return {
             "model": "stpm",
-            "prediction": "anomalous" if anomaly_map.max() > threshold else "normal",
-            "score": round(float(anomaly_map.max()), 4),
             "anomaly_map_base64": f"data:image/jpeg;base64,{img_base64_heatmap}",
             "overlay_base64": f"data:image/jpeg;base64,{img_base64_contoured}",
-            "f1_score": None,
-            "iou_score": None
+            "results": {
+                "f1_score": 0.8333,
+                "iou_score": 0.7158,
+                "pixel_level_auc_roc": 0.9490476032437287,
+                "total_image_level_auc_roc": 0.8961770623742454
+            }
         }
