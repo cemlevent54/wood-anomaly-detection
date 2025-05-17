@@ -18,5 +18,19 @@ RUN pip install --upgrade pip && \
     -f https://download.pytorch.org/whl/torch_stable.html && \
     python -c "import torch; import torchvision; print('Torch OK, CUDA:', torch.cuda.is_available())"
 
+
+# ekstra bağımlılıklar
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    libgtk-3-0 && \
+    pip install tifffile python-multipart && \
+    pip uninstall -y numpy && pip install numpy==1.26.4 && \
+    pip install opencv-python && \
+    pip install scikit-learn geomloss pandas pytorch-lightning scikit-image
+
 # Uygulamayı başlat
 CMD ["uvicorn", "api.app.main:app", "--host", "0.0.0.0", "--port", "8020", "--reload"]

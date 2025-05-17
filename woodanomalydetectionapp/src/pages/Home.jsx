@@ -99,14 +99,14 @@ const Home = () => {
           onSelect={handleModelSelect}
         />
         <button onClick={handleGetResults}>GET RESULTS</button>
-        <ExportButton onClick={handleExport} />
+        {/*<ExportButton onClick={handleExport} />*/}
       </div>
 
       <div className="result-section">
         <ResultDisplay resultImage={resultImage} />
         {resultImage && (
           <button style={{ marginTop: "10px" }} onClick={() => setShowResultModal(true)}>
-            Enlarge
+            Large
           </button>
         )}
         {/*<MetricsDisplay metrics={metrics} />*/}
@@ -147,7 +147,7 @@ const Home = () => {
               borderRadius: 8
             }} />
             <button style={{ marginTop: 16 }} onClick={() => setShowModal(false)}>
-              Kapat
+              Close
             </button>
           </div>
         </div>

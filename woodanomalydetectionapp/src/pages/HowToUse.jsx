@@ -51,26 +51,10 @@ const HowToUse = () => {
           <br />
           - You can use the "Enlarge" button to view the result image in full size.
           <br />
-          - Results include:
-          <br />
-          &nbsp;&nbsp;* Anomaly detection
-          <br />
-          &nbsp;&nbsp;* F1 Score
-          <br />
-          &nbsp;&nbsp;* IOU Score
-          <br />
-          &nbsp;&nbsp;* Overall Score
         </p>
       </div>
 
-      <div className="instruction-section">
-        <h2>5. Exporting Results</h2>
-        <p>
-          - Use the "Export" button to export the analysis results.
-          <br />
-          - Results will be downloaded automatically.
-        </p>
-      </div>
+      
 
       <div className="note-section">
         <h3>Important Notes:</h3>
