@@ -12,3 +12,13 @@ services:
     environment:
       - PYTHONBUFFERED=1
     restart: always
+  
+  frontend:
+    build:
+      context: ./woodanomalydetectionapp
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./woodanomalydetectionapp:/app
+    command: ["npm", "start"] # Veya senin geliştirme komutun neyse
